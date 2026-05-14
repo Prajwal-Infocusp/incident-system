@@ -1,12 +1,15 @@
-# IncidentHub - Incident Management System
+# Infocusp IncidentHub - Incident Management System
 
 A simple, clean incident management system built with Next.js, TypeScript, and PostgreSQL.
 
 ## Features
 
-- **Dashboard** - Overview of all incidents with stats (total, open, investigating, critical)
+- **Dashboard** - Overview of all incidents with stats (total, open, investigating, critical, assigned to you)
 - **Incident CRUD** - Create, view, update, and track incidents
+- **Reassign Incidents** - Easily reassign incidents to other team members
 - **Activity Timeline** - Track all changes and comments on incidents
+- **Notifications** - Bell icon shows assigned incidents; mark as read functionality
+- **Sorting** - Sort incidents table by severity, created date, creator, and assignee
 - **User Authentication** - Secure login with email/password
 - **Filtering** - Filter incidents by status, severity, and assignee
 
@@ -56,7 +59,7 @@ A simple, clean incident management system built with Next.js, TypeScript, and P
    npm run dev
    ```
 
-6. **Open http://localhost:3000**
+6. **Open http://localhost:3000** (or your configured port)
 
 ### Creating Your First User
 
@@ -126,12 +129,19 @@ docker run -p 3000:3000 \
 
 ## API Endpoints
 
+### Authentication
 - `POST /api/auth/register` - Register new user
 - `GET/POST /api/auth/[...nextauth]` - NextAuth handlers
+
+### Incidents
 - `GET /api/incidents` - List incidents
 - `POST /api/incidents` - Create incident
 - `GET/PATCH /api/incidents/[id]` - Get/Update incident
-- `POST /api/incidents/[id]/activities` - Add activity
+- `POST /api/incidents/[id]/activities` - Add activity to incident
+
+### Notifications
+- `GET /api/notifications` - Get assigned incidents for current user
+- `POST /api/notifications/[id]` - Mark notification as read
 
 ## Database Schema
 
@@ -139,7 +149,7 @@ docker run -p 3000:3000 \
 - id, name, email, password, role, createdAt, updatedAt
 
 ### Incident
-- id, title, description, severity, status, createdById, assignedToId, createdAt, updatedAt
+- id, title, description, severity, status, createdById, assignedToId, createdAt, updatedAt, **readAt**
 
 ### IncidentActivity
 - id, action, message, incidentId, createdById, createdAt
