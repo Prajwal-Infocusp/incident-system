@@ -2,7 +2,8 @@
 
 A simple, clean incident management system built with Next.js, TypeScript, and PostgreSQL.
 
-<img width="1920" height="1011" alt="image" src="https://github.com/user-attachments/assets/4b4e8f55-c52a-45fd-810a-91410f8ca08b" />
+<img width="1856" height="953" alt="image" src="https://github.com/user-attachments/assets/41ee525a-df55-4563-abb9-1d0c4f1f130d" />
+
 
 
 ## Features
