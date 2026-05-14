@@ -10,10 +10,13 @@ import { SEVERITY_COLORS, STATUS_COLORS, Incident, Severity, IncidentStatus } fr
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { Label } from './ui/label'
 import { User } from 'next-auth'
+import { ArrowUpDown } from 'lucide-react'
 
 interface IncidentFiltersProps {
   users: User[]
 }
+
+type SortField = 'severity' | 'createdAt' | 'createdBy' | 'assignedTo' | null
 
 export function IncidentFilters({ users }: IncidentFiltersProps) {
   const router = useRouter()
@@ -31,7 +34,7 @@ export function IncidentFilters({ users }: IncidentFiltersProps) {
 
     const query = params.toString()
     router.push(`/incidents${query ? `?${query}` : ''}`, { scroll: false })
-  }, [status, severity, assignee])
+  }, [status, severity, assignee, router])
 
   return (
     <div className="flex flex-wrap gap-4">

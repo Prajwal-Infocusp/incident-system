@@ -25,7 +25,7 @@ export function Sidebar({ session }: SidebarProps) {
       <div className="flex h-16 items-center px-4 border-b">
         <div className="flex items-center gap-2">
           <AlertTriangle className="h-6 w-6 text-orange-600" />
-          <span className="font-bold text-lg">IncidentHub</span>
+          <span className="font-bold text-base text-orange-600 truncate">Infocusp IncidentHub</span>
         </div>
       </div>
       <nav className="flex-1 p-4 space-y-1">
@@ -58,7 +58,12 @@ export function Sidebar({ session }: SidebarProps) {
         <Button
           variant="ghost"
           className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
-          onClick={() => signOut({ callbackUrl: '/login' })}
+          onClick={() => {
+            const currentOrigin = window.location.origin
+            signOut({ redirect: false }).then(() => {
+              window.location.href = `${currentOrigin}/login`
+            })
+          }}
         >
           <LogOut className="mr-2 h-4 w-4" />
           Sign out

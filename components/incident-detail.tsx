@@ -11,16 +11,18 @@ import { Label } from './ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { SEVERITY_COLORS, STATUS_COLORS, Incident, Severity } from '@/types'
 import { ArrowLeft } from 'lucide-react'
+import { User } from 'next-auth'
 
 interface IncidentDetailProps {
   incident: Incident
+  users: User[]
 }
 
-export function IncidentDetail({ incident }: IncidentDetailProps) {
+export function IncidentDetail({ incident, users }: IncidentDetailProps) {
   const router = useRouter()
   const [status, setStatus] = useState(incident.status)
   const [severity, setSeverity] = useState(incident.severity)
-  const [assignedToId, setAssignedToId] = useState(incident.assignedToId || '')
+  const [assignedToId, setAssignedToId] = useState(incident.assignedToId || 'unassigned')
   const [comment, setComment] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -33,7 +35,7 @@ export function IncidentDetail({ incident }: IncidentDetailProps) {
         body: JSON.stringify({
           status,
           severity,
-          assignedToId: assignedToId || null,
+          assignedToId: assignedToId === 'unassigned' ? null : assignedToId,
         }),
       })
 
@@ -143,6 +145,22 @@ export function IncidentDetail({ incident }: IncidentDetailProps) {
                 </div>
               </div>
               <div className="space-y-2">
+                <Label>Assignee</Label>
+                <Select value={assignedToId} onValueChange={setAssignedToId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select assignee" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="unassigned">Unassigned</SelectItem>
+                    {users.map((user) => (
+                      <SelectItem key={user.id} value={user.id}>
+                        {user.name || user.email}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
                 <Label>Add Comment</Label>
                 <Textarea
                   value={comment}
@@ -194,7 +212,7 @@ export function IncidentDetail({ incident }: IncidentDetailProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>Created</CardTitle>
+              <CardTitle>Created At</CardTitle>
             </CardHeader>
             <CardContent>
               <p>{formatDate(incident.createdAt)}</p>

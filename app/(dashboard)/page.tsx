@@ -1,14 +1,17 @@
-import { getIncidentStats, getIncidents } from '@/lib/actions'
+import { getIncidentStats, getIncidents, getSession } from '@/lib/actions'
 import { StatsCards } from '@/components/stats-cards'
 import { RecentIncidents } from '@/components/recent-incidents'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function DashboardPage() {
+  const session = await getSession()
+  const userId = (session?.user as any)?.id
+
   const [stats, incidents] = await Promise.all([
-    getIncidentStats(),
+    getIncidentStats(userId),
     getIncidents(),
   ])
 

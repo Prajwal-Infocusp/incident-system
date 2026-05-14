@@ -94,6 +94,7 @@ model Incident {
   assignedToId String?
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
+  readAt      DateTime?
 
   createdBy   User                @relation("CreatedIncidents", fields: [createdById], references: [id])
   assignedTo  User?               @relation("AssignedIncidents", fields: [assignedToId], references: [id])

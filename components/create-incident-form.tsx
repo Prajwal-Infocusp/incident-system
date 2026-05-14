@@ -49,6 +49,7 @@ export function CreateIncidentForm({ users }: CreateIncidentFormProps) {
 
       const incident = await res.json()
       router.push(`/incidents/${incident.id}`)
+      router.refresh()
     } catch (err: any) {
       setError(err.message || 'An error occurred')
       setLoading(false)

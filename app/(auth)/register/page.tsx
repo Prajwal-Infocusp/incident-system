@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { AlertTriangle } from 'lucide-react'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -60,7 +61,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <Card className="w-full max-w-md">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
+      <div className="mb-8 text-center">
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <AlertTriangle className="h-8 w-8 text-orange-600" />
+          <span className="text-2xl font-bold text-orange-600">Infocusp IncidentHub</span>
+        </div>
+      </div>
+      <Card className="w-full max-w-md">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
         <CardDescription>
@@ -125,6 +133,7 @@ export default function RegisterPage() {
           </Link>
         </div>
       </CardContent>
-    </Card>
+      </Card>
+    </div>
   )
 }

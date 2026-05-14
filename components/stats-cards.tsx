@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import { AlertTriangle, AlertCircle, CheckCircle2, Clock, AlertOctagon } from 'lucide-react'
+import { AlertTriangle, AlertCircle, CheckCircle2, Clock, AlertOctagon, UserCircle } from 'lucide-react'
 
 interface StatsCardsProps {
   stats: {
@@ -8,12 +8,13 @@ interface StatsCardsProps {
     investigating: number
     resolved: number
     critical: number
+    assignedToMe: number
   }
 }
 
 export function StatsCards({ stats }: StatsCardsProps) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Total Incidents</CardTitle>
@@ -52,6 +53,16 @@ export function StatsCards({ stats }: StatsCardsProps) {
         <CardContent>
           <div className="text-2xl font-bold">{stats.critical}</div>
           <p className="text-xs text-muted-foreground">Needs immediate attention</p>
+        </CardContent>
+      </Card>
+      <Card className={stats.assignedToMe > 0 ? 'border-blue-200 bg-blue-50' : ''}>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">Assigned to You</CardTitle>
+          <UserCircle className="h-4 w-4 text-blue-600" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">{stats.assignedToMe}</div>
+          <p className="text-xs text-muted-foreground">Awaiting your action</p>
         </CardContent>
       </Card>
     </div>

@@ -68,16 +68,17 @@ export async function getIncident(id: string) {
   })
 }
 
-export async function getIncidentStats() {
-  const [total, open, investigating, resolved, critical] = await Promise.all([
+export async function getIncidentStats(userId?: string) {
+  const [total, open, investigating, resolved, critical, assignedToMe] = await Promise.all([
     prisma.incident.count(),
     prisma.incident.count({ where: { status: 'OPEN' } }),
     prisma.incident.count({ where: { status: 'INVESTIGATING' } }),
     prisma.incident.count({ where: { status: 'RESOLVED' } }),
     prisma.incident.count({ where: { severity: 'CRITICAL', status: { not: 'RESOLVED' } } }),
+    userId ? prisma.incident.count({ where: { assignedToId: userId, status: { not: 'RESOLVED' } } }) : Promise.resolve(0),
   ])
 
-  return { total, open, investigating, resolved, critical }
+  return { total, open, investigating, resolved, critical, assignedToMe }
 }
 
 export async function createIncident(data: CreateIncidentInput) {
